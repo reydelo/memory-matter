@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Memory Matter",
+  "name": "Memory Matter card game",
   "icons": [
     {
       "src": "favicon.ico",

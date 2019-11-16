@@ -2,17 +2,18 @@ import React from 'react';
 import './Card.css';
 
 export interface CardProps {
-  value: string
+  value: string,
+  image: string,
 }
 
 const Card: React.FC<CardProps> = (props) => {
   const [visible, toggleVisibility] = React.useState(false);
-
+  const backgroundImage = visible ? props.image : '/images/card-front.png';
   return (
-    <div className={`card ${visible ? 'visible' : 'hidden'}`} onClick={() => { toggleVisibility(!visible) }}>
-      <div className="front"></div>
-      <div className="back">{props.value}</div>
-    </div>
+    <div className="card"
+      onClick={() => { toggleVisibility(!visible) }}
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    />
   );
 }
 
