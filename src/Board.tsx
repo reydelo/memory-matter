@@ -2,35 +2,53 @@ import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import './Board.css';
 
-const Board: React.FC = () => {
-  const cards = [
-    { id: '1', value: 'deer', image: '/images/card-deer.png' },
-    { id: '2', value: 'bear', image: '/images/card-bear.png' },
-    { id: '3', value: 'buffalo', image: '/images/card-buffalo.png' },
-    { id: '4', value: 'elk', image: '/images/card-elk.png' },
-    { id: '5', value: 'fox', image: '/images/card-fox.png' },
-    { id: '6', value: 'horse', image: '/images/card-horse.png' },
-    { id: '7', value: 'wolf', image: '/images/card-wolf.png' },
-    { id: '8', value: 'deer', image: '/images/card-deer.png' },
-    { id: '9', value: 'bear', image: '/images/card-bear.png' },
-    { id: '10', value: 'buffalo', image: '/images/card-buffalo.png' },
-    { id: '11', value: 'elk', image: '/images/card-elk.png' },
-    { id: '12', value: 'fox', image: '/images/card-fox.png' },
-    { id: '13', value: 'horse', image: '/images/card-horse.png' },
-    { id: '14', value: 'wolf', image: '/images/card-wolf.png' },
-  ];
+interface Card {
+  value: string,
+  image: string,
+  id: number,
+}
 
-  const [currentTurn, setCurrentTurn] = useState<Array<string>>([]);
-  const [matched, setMatched] = useState<Array<string>>([]);
+const cards = [
+  { value: 'deer', image: '/images/card-deer.png' },
+  { value: 'bear', image: '/images/card-bear.png' },
+  { value: 'buffalo', image: '/images/card-buffalo.png' },
+  { value: 'elk', image: '/images/card-elk.png' },
+  { value: 'fox', image: '/images/card-fox.png' },
+  { value: 'horse', image: '/images/card-horse.png' },
+  { value: 'wolf', image: '/images/card-wolf.png' }
+];
+
+function shuffle(a: Array<any>) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * i)
+    const temp = a[i]
+    a[i] = a[j]
+    a[j] = temp
+  }
+  return a;
+}
+
+function getCards(numberOfPairs: 3 | 4 | 5 | 6 | 7) {
+  const shuffledOptions = shuffle(cards).slice(0, numberOfPairs);
+  const duplicatedOptions = shuffle([...shuffledOptions, ...shuffledOptions]);
+  return duplicatedOptions.map((card, i) => {
+      return { ...card, id: i };
+  });
+};
+
+const Board: React.FC = () => {
+  const [cards, setCards] = useState<Array<Card>>(getCards(4));
+  const [currentTurn, setCurrentTurn] = useState<Array<number>>([]);
+  const [matched, setMatched] = useState<Array<number>>([]);
   const [disabled, setDisabled] = useState<boolean>(false);
 
-  const onClick = (id: string) => {
+  const onClick = (id: number) => {
     setDisabled(true);
     setCurrentTurn([...currentTurn, id])
   };
 
   useEffect(() => {
-    const getCardValue = (id: string ) => {
+    const getCardValue = (id: number ) => {
       const foundCard = cards.find(card => card.id === id);
       return foundCard ? foundCard.value : undefined;
     };
@@ -41,15 +59,24 @@ const Board: React.FC = () => {
         const value1 = getCardValue(id1);
         const value2 = getCardValue(id2);
         if (value1 === value2) {
+          setCurrentTurn([]);
           setMatched([...matched, id1, id2]);
+        } else {
+          setCurrentTurn([]);
         }
-        setCurrentTurn([]);
         setDisabled(false);
       }, 1000);
     } else {
       setDisabled(false);
     }
   }, [cards, currentTurn, matched]);
+
+  useEffect(() => {
+    if (matched.length === cards.length) {
+      setMatched([]);
+      setCards(getCards(4));
+    }
+  }, [cards, matched]);
 
   return (
     <div className="Board-container">

@@ -2,10 +2,10 @@ import React from 'react';
 import './Card.css';
 
 export interface CardProps {
-  id: string,
+  id: number,
   image: string,
   visible: boolean,
-  onClick: (id: string) => void,
+  onClick: (id: number) => void,
   disabled: boolean,
 }
 
