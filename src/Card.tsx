@@ -10,9 +10,9 @@ export interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({id, image, visible, onClick, disabled}) => {
-  const backgroundImage = visible ? image : '/images/card-front.png';
+  const backgroundImage = visible ? image : '/images/card-front.jpg';
   return (
-    <div className={`card ${visible && 'visible'} ${disabled && 'disabled'}`}
+    <div className={`card ${visible ? 'visible' : ''} ${disabled ? 'disabled' : ''}`}
       onClick={() => visible || disabled ? null : onClick(id)}
       style={{ backgroundImage: `url(${backgroundImage})` }}
     />

@@ -9,13 +9,13 @@ interface Card {
 }
 
 const cards = [
-  { value: 'deer', image: '/images/card-deer.png' },
-  { value: 'bear', image: '/images/card-bear.png' },
-  { value: 'buffalo', image: '/images/card-buffalo.png' },
-  { value: 'elk', image: '/images/card-elk.png' },
-  { value: 'fox', image: '/images/card-fox.png' },
-  { value: 'horse', image: '/images/card-horse.png' },
-  { value: 'wolf', image: '/images/card-wolf.png' }
+  { value: 'deer', image: '/images/card-deer.jpg' },
+  { value: 'bear', image: '/images/card-bear.jpg' },
+  { value: 'buffalo', image: '/images/card-buffalo.jpg' },
+  { value: 'elk', image: '/images/card-elk.jpg' },
+  { value: 'fox', image: '/images/card-fox.jpg' },
+  { value: 'horse', image: '/images/card-horse.jpg' },
+  { value: 'wolf', image: '/images/card-wolf.jpg' }
 ];
 
 function shuffle(a: Array<any>) {
@@ -28,8 +28,8 @@ function shuffle(a: Array<any>) {
   return a;
 }
 
-function getCards(numberOfPairs: 3 | 4 | 5 | 6 | 7) {
-  const shuffledOptions = shuffle(cards).slice(0, numberOfPairs);
+function getCards() {
+  const shuffledOptions = shuffle(cards).slice(0, 6);
   const duplicatedOptions = shuffle([...shuffledOptions, ...shuffledOptions]);
   return duplicatedOptions.map((card, i) => {
       return { ...card, id: i };
@@ -37,7 +37,7 @@ function getCards(numberOfPairs: 3 | 4 | 5 | 6 | 7) {
 };
 
 const Board: React.FC = () => {
-  const [cards, setCards] = useState<Array<Card>>(getCards(4));
+  const [cards, setCards] = useState<Array<Card>>(getCards());
   const [currentTurn, setCurrentTurn] = useState<Array<number>>([]);
   const [matched, setMatched] = useState<Array<number>>([]);
   const [disabled, setDisabled] = useState<boolean>(false);
@@ -74,13 +74,12 @@ const Board: React.FC = () => {
   useEffect(() => {
     if (matched.length === cards.length) {
       setMatched([]);
-      setCards(getCards(4));
+      setCards(getCards());
     }
   }, [cards, matched]);
 
   return (
-    <div className="Board-container">
-      <div className="Board-row">
+    <div className="Board">
         { cards.map(({ id, image }) => {
           return (
             <Card
@@ -93,7 +92,6 @@ const Board: React.FC = () => {
             />
           );
         })}
-      </div>
     </div>
   );
 }

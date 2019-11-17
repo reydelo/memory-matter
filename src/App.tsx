@@ -11,6 +11,7 @@ const App: React.FC = () => {
         <p>Matter</p>
       </header>
       <Board />
+      <div className="App-footer" />
     </div>
   );
 }

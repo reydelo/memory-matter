@@ -1,10 +1,7 @@
 
-.Board-container {
-    max-width: 1335px;
+.Board {
+    max-width: 589px;
     margin: 0 auto;
-  }
-
-  .Board-row {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;

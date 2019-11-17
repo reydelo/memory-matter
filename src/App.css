@@ -3,12 +3,18 @@
 .App {
   text-align: center;
   font-family: 'Libre Baskerville', serif;
-  background-color: #181308;
+  background-color: #fff;
   min-height: 100vh;
+  background-image: url('/watercolor.jpg');
+  background-size: cover;
+  background-position: bottom center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .App-header {
-  color: #E6C4A6;
+  color: #000;
   font-size: 24px;
 }
 .App-logo {
