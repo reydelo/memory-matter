@@ -11,6 +11,7 @@ export interface CardProps {
 
 const Card: React.FC<CardProps> = ({id, image, visible, onClick, disabled}) => {
   const backgroundImage = visible ? image : '/images/card-front.jpg';
+
   useEffect(() => {
     const img = new Image();
     img.src = image;

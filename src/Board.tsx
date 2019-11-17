@@ -41,6 +41,7 @@ const Board: React.FC = () => {
   const [currentTurn, setCurrentTurn] = useState<Array<number>>([]);
   const [matched, setMatched] = useState<Array<number>>([]);
   const [disabled, setDisabled] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const onClick = (id: number) => {
     setDisabled(true);
@@ -73,13 +74,20 @@ const Board: React.FC = () => {
 
   useEffect(() => {
     if (matched.length === cards.length) {
-      setMatched([]);
-      setCards(getCards());
+      setDisabled(true);
+      setSuccess(true);
+      setTimeout(() => {
+        setMatched([]);
+        setCards(getCards());
+        setSuccess(false);
+        setDisabled(false);
+      }, 5000);
     }
   }, [cards, matched]);
 
   return (
-    <div className="Board">
+    <div className={`Board ${success ? 'success' : ''}`}>
+        {success && <div className="Board-success-message">All matches found! Impressive!</div>}
         { cards.map(({ id, image }) => {
           return (
             <Card
