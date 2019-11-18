@@ -24,6 +24,8 @@ const cards = [
     { value: 'wolf', image: wolfImage },
 ];
 
+cards.forEach(card => new Image().src = card.image);
+
 function getCards() {
     const cardsSample = sampleSize(cards, 6);
     const duplicatedOptions = [...cardsSample, ...cardsSample].map((card, i) => { return { ...card, id: i }});
