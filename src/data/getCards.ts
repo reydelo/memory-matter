@@ -1,3 +1,11 @@
+import deerImage from '../images/card-deer.jpg';
+import bearImage from '../images/card-bear.jpg';
+import buffaloImage from '../images/card-buffalo.jpg';
+import elkImage from '../images/card-elk.jpg';
+import foxImage from '../images/card-fox.jpg';
+import horseImage from '../images/card-horse.jpg';
+import wolfImage from '../images/card-wolf.jpg';
+
 export interface Card {
     value: string,
     image: string,
@@ -5,13 +13,13 @@ export interface Card {
 };
 
 const cards = [
-    { value: 'deer', image: '/images/card-deer.jpg' },
-    { value: 'bear', image: '/images/card-bear.jpg' },
-    { value: 'buffalo', image: '/images/card-buffalo.jpg' },
-    { value: 'elk', image: '/images/card-elk.jpg' },
-    { value: 'fox', image: '/images/card-fox.jpg' },
-    { value: 'horse', image: '/images/card-horse.jpg' },
-    { value: 'wolf', image: '/images/card-wolf.jpg' }
+    { value: 'deer', image: deerImage },
+    { value: 'bear', image: bearImage },
+    { value: 'buffalo', image: buffaloImage },
+    { value: 'elk', image: elkImage },
+    { value: 'fox', image: foxImage },
+    { value: 'horse', image: horseImage },
+    { value: 'wolf', image: wolfImage },
 ];
 
 function shuffleCards(a: Array<any>) {

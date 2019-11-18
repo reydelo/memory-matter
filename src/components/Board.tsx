@@ -69,7 +69,7 @@ const Board: React.FC = () => {
               key={id}
               id={id}
               image={image}
-              visible={ currentTurn.includes(id) || matched.includes(id) }
+              isFaceUp={ currentTurn.includes(id) || matched.includes(id) }
               disabled={disabled}
               onClick={onCardClick}
             />

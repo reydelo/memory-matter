@@ -18,6 +18,6 @@
     }
 }
 
-.card.visible, .card.disabled {
+.card.isFaceUp, .card.disabled {
     cursor: initial;
 }
