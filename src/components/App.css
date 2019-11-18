@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap');
 
 .App {
-  text-align: center;
   font-family: 'Libre Baskerville', serif;
   background-color: #fff;
   min-height: 100vh;
@@ -15,6 +14,7 @@
 
 .App-header {
   color: #000;
+  text-align: center;
   font-size: 24px;
 }
 .App-logo {
