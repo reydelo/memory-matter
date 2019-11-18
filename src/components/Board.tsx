@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import classnames from 'classnames';
 import Card from './Card';
 import getCards from '../data/getCards';
 import './Board.css';
 
 const Board: React.FC = () => {
-  const [cards, setCards] = useState(getCards());
+  const [cards, setCards] = useState(() => getCards());
   const [currentTurn, setCurrentTurn] = useState<Array<number>>([]);
   const [disabled, setDisabled] = useState(false);
   const [matched, setMatched] = useState<Array<number>>([]);
@@ -61,15 +62,14 @@ const Board: React.FC = () => {
   useEffect(() => checkForSuccess());
 
   return (
-    <div className={`Board ${success ? 'success' : ''}`}>
+    <div className={classnames('Board', {'success': success})}>
         {success && <div className="Board-success-message">All matches found! Impressive!</div>}
-        { cards.map(({ id, image }) => {
+        { cards.map(card => {
           return (
             <Card
-              key={id}
-              id={id}
-              image={image}
-              isFaceUp={ currentTurn.includes(id) || matched.includes(id) }
+              key={card.id}
+              card={card}
+              isFaceUp={ currentTurn.includes(card.id) || matched.includes(card.id) }
               disabled={disabled}
               onClick={onCardClick}
             />
