@@ -1,3 +1,5 @@
+import sampleSize from 'lodash.samplesize';
+import shuffle from 'lodash.shuffle';
 import deerImage from '../images/card-deer.jpg';
 import bearImage from '../images/card-bear.jpg';
 import buffaloImage from '../images/card-buffalo.jpg';
@@ -22,24 +24,11 @@ const cards = [
     { value: 'wolf', image: wolfImage },
 ];
 
-function shuffleCards(a: Array<any>) {
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * i);
-        const temp = a[i];
-
-        a[i] = a[j];
-        a[j] = temp;
-    }
-    return a;
-}
-
 function getCards() {
-    const shuffledOptions = shuffleCards(cards).slice(0, 6);
-    const duplicatedOptions = shuffleCards([...shuffledOptions, ...shuffledOptions]);
+    const cardsSample = sampleSize(cards, 6);
+    const duplicatedOptions = [...cardsSample, ...cardsSample].map((card, i) => { return { ...card, id: i }});
 
-    return duplicatedOptions.map((card, i) => {
-        return { ...card, id: i };
-    });
+    return shuffle(duplicatedOptions);
 };
 
 export default getCards;
