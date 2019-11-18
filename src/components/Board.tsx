@@ -1,58 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import classnames from 'classnames';
 import Card from './Card';
-import getCards from '../data/getCards';
+import getCards, { Card as CardType } from '../data/getCards';
 import './Board.css';
 
 const Board: React.FC = () => {
-  const [cards, setCards] = useState(() => getCards());
-  const [currentTurn, setCurrentTurn] = useState<Array<number>>([]);
+  const [cards, setCards] = useState<Array<CardType>>(() => getCards());
+  const [selectedCards, setSelectedCards] = useState<Array<CardType>>([]);
   const [disabled, setDisabled] = useState(false);
-  const [matched, setMatched] = useState<Array<number>>([]);
+  const [matchedCards, setMatchedCards] = useState<Array<CardType>>([]);
   const [success, setSuccess] = useState(false);
 
-  function onCardClick(id: number) {
+  function onCardClick(card: CardType) {
     setDisabled(true);
-    setCurrentTurn([...currentTurn, id])
+    setSelectedCards([...selectedCards, card])
   };
 
-  useEffect(() => {
-    function getCardValue(id: number) {
-      const foundCard = cards.find(card => card.id === id);
+  const checkForMatch = useCallback(() => {
+    const [card1, card2] = selectedCards;
 
-      return foundCard ? foundCard.value : undefined;
-    };
-
-    function checkForMatch() {
-      const [id1, id2] = currentTurn;
-      const value1 = getCardValue(id1);
-      const value2 = getCardValue(id2);
-
-      if (value1 === value2) {
-        setCurrentTurn([]);
-        setMatched(m => [...m, id1, id2]);
-      } else {
-        setCurrentTurn([]);
-      }
-      setDisabled(false);
+    if (card1.value === card2.value) {
+      setSelectedCards([]);
+      setMatchedCards(m => [...m, card1, card2]);
+    } else {
+      setSelectedCards([]);
     }
+    setDisabled(false);
+  }, [selectedCards]);
 
-    if (currentTurn.length === 2) {
+  useEffect(() => {
+    if (selectedCards.length === 2) {
       setTimeout(() => checkForMatch(), 1000);
     } else {
       setDisabled(false);
     }
-  }, [currentTurn, cards]);
+  }, [selectedCards, checkForMatch]);
 
   function resetGame() {
-    setMatched([]);
+    setMatchedCards([]);
     setCards(getCards());
     setSuccess(false);
     setDisabled(false);
   };
 
   function checkForSuccess() {
-    if (matched.length === cards.length) {
+    if (matchedCards.length === cards.length) {
       setDisabled(true);
       setSuccess(true);
       setTimeout(() => resetGame(), 5000);
@@ -69,7 +61,7 @@ const Board: React.FC = () => {
             <Card
               key={card.id}
               card={card}
-              isFaceUp={ currentTurn.includes(card.id) || matched.includes(card.id) }
+              isFaceUp={selectedCards.includes(card) || matchedCards.includes(card)}
               disabled={disabled}
               onClick={onCardClick}
             />

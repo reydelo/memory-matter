@@ -7,7 +7,7 @@ import { Card as CardType } from '../data/getCards';
 export interface CardProps {
   card: CardType,
   isFaceUp: boolean,
-  onClick: (id: number) => void,
+  onClick: (card: CardType) => void,
   disabled: boolean,
 }
 
@@ -16,7 +16,7 @@ const Card: React.FC<CardProps> = ({card, isFaceUp, onClick, disabled}) => {
 
   return (
     <div className={classnames('card', { 'isFaceUp': isFaceUp, 'disabled': disabled })}
-      onClick={() => (!isFaceUp && !disabled) && onClick(card.id)}
+      onClick={() => (!isFaceUp && !disabled) && onClick(card)}
       style={{ backgroundImage: `url(${backgroundImage})` }}
     />
   );
