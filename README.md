@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Memory Matter
+
+A card matching memory game built with [Create React App](https://github.com/facebook/create-react-app).  Hosted at [memory-matter.netlify.com](https://memory-matter.netlify.com/).  All images © [Kim Kranz](https://www.thewildunknown.com/).
 
 ## Available Scripts
 
